@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+const ReadGit = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://api.github.com/users")
+      .then((reposnse) => {
+        setData(reposnse.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
+  return (
+    <div className=" d- flex flex-column  align-item-center justify-conent-center">
+      <h2>READING GIT Information</h2> <br />
+      <table className="table table-dark">
+        <thead className="table table-dark">
+          <tr>
+            <th className="text-center">ID</th>
+            <th className="text-center">Name</th>
+            <th className="text-center">Photo</th>
+          </tr>
+        </thead>
+        <tbody className="table table-Success">
+          {data.map((row) => (
+            <tr>
+              <td className="text-center" style={{ verticalAlign: "middle" }}>
+                {row.id}
+              </td>
+              <td className="text-center" style={{ verticalAlign: "middle" }}>
+                {row.login}
+              </td>
+              <td className="text-center" style={{ verticalAlign: "middle" }}>
+                <img
+                  src={row.avatar_url}
+                  width="200px"
+                  height="200px"
+                  alt="pic not found"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {/* {JSON.stringify(data)} */}
+    </div>
+  );
+};
+
+export default ReadGit;
